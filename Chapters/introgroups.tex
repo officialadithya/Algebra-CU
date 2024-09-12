@@ -1,0 +1,671 @@
+\section{Lecture 1: August 26, 2024}
+
+    \subsection{Introduction}
+
+        In this course, we seek to understand two fundamental ``categories:'' groups and rings. This course seeks to prepare Ph. D. students for the first half of the algebra preliminary exam. A category \((\mathcal{O},\mathcal{M})\), informally, is a collection of objects \(\mathcal{O}\) and a collection of morphisms \(\mathcal{M}\) such that each morphism pairs two objects in such a way that reasonable things happen. For example, consider the table.
+        \begin{center}
+            \begin{tabular}{cc}
+                \hline
+                \(\mathcal{O}\) & \(\mathcal{M}\) \\
+                \hline
+                Sets & Functions \\
+                Vector Spaces & Linear Transformations \\
+                Groups & Group Homomorphisms \\
+                Rings & Ring Homomorphisms \\
+                \hline
+            \end{tabular}
+        \end{center}
+        \vphantom
+        \\
+        \\
+        We remark that vector spaces are \(\mathbb{F}\)-modules, functions are set homomorphisms, and linear transformations are \(\mathbb{F}\)-module homomorphisms. A benefit of this category-theoretic framework is that it highlights commonalities between families of algebraic structures. A drawback is that this framework may not be conducive to learning for the first time. Also, it is difficult to see the peculiarities of individual categories. In this course, we will indirectly use category theory to inform our constructions and definitions.
+
+\pagebreak
+
+\section{Lecture 2: August 28, 2024}
+
+    \subsection{Group Axioms and an Introduction to the Symmetric Group}
+
+    We start with the following definition.
+    \begin{definition}{\Stop\,\,Functions}{functions}
+        
+        A function \(f:A\to B\) from a set \(A\) to a set \(B\) is a subset \(\{(a,f(a)):a\in A\}\subseteq A\times B\) such that for each \(a\in A\), there exists a unique \(b=f(a)\in B\). By convention, if \(f(a)=b\), we can write \(a\mapsto b\).
+        \\
+        \\
+        We say that \(f:A\to B\) is injective if \(f(a)=f(b)\) implies \(a=b\) and surjective if for every \(b\in B\), there exists \(a\in A\) with \(f(a)=b\). Then, \(f:A\to B\) is bijective if it is both injective and surjective.
+
+    \end{definition}
+    \vphantom
+    \\
+    \\
+    Given functions \(f:A\to B\) and \(g:B\to C\), the composition \(g\circ f:A\to C\) is the function given by
+    \begin{equation*}
+        (g\circ f)(a)=g(f(a)), \quad a\in A.
+    \end{equation*}
+    \begin{remark*}
+        A function \(f:A\to B\) is bijective if and only if there exists a function \(f^{-1}:B\to A\) such that \((f\circ f^{-1})(b)=b\) for all \(b\in B\), and \((f^{-1}\circ f)(a)=a\) for all \(a\in A\).
+    \end{remark*}
+    \vphantom
+    \\
+    \\
+    Let's talk about groups!
+    \begin{definition}{\Stop\,\,Groups}{groups}
+
+        A group \((G,\circ)\) is a set \(G\) with a function \(\circ: G\times G\to G, (g,h)\mapsto g\circ h\) such that
+        \begin{enumerate}
+            \item[(G1)] there exists \(1\in G\) such that \(g\circ 1=g=1\circ g\) for all \(g\in G\),
+            \item[(G2)] for each \(g\in G\) there exists \(g^{-1}\in G\) such that \(g\circ g^{-1}=1=g^{-1}\circ g\), and
+            \item[(G3)] for all \(g,h,k\in G\), \(g\circ (h\circ k)=(g\circ h)\circ k\).  
+        \end{enumerate}
+        
+    \end{definition}
+    \begin{remark*}
+        The element \(1\in G\) is called an identity. The element \(g^{-1}\in G\) is an inverse of \(g\in G\).
+    \end{remark*}
+    \begin{remark*}
+        When the operation \(\circ\) is clear from context, we will often refer to \(G\) as a group, when we really mean \((G,\circ)\). Similarly, we say that a group \(G\) under \(\circ\) indicates that \(\circ:G\times G\to G\) is the function that makes \((G,\circ)\) a group. Furthermore, we will often also write \(gh\) to mean \(g\circ h\).
+    \end{remark*}
+    \begin{proposition}{\Stop\,\,The Group Identity is Unique}{identityunique}
+        If \(1\) and \(1'\) are identities in group \((G,\circ)\), then, \(1=1'\).
+        \begin{proof}
+            We have \(1=1\circ 1'=1'\circ 1=1'\).
+        \end{proof}
+    \end{proposition}
+    \begin{proposition}{\Stop\,\,The Inverse of a Group Element is Unique}{identityunique}
+        Let \((G,\circ)\) be a group. If \(g\in G\), \(f\circ g=g\circ f=1\), and \(h\circ g=g\circ h=1\), then \(f=h\).
+        \begin{proof}
+            We have that \(g\circ f=g\circ h\). Multiplying both sides by \(f\) on the left gives \(f\circ (g\circ f)=f\circ (g\circ h)\).
+            and then using associativity gives us \((f\circ g)\circ f=(f\circ g)\circ h\). Since \(f\circ g=1\), we indeed have \(f=h\), as desired.
+        \end{proof}
+    \end{proposition}
+    \begin{proposition}{\Stop\,\,The Inverse of a Product}{inverseofproduct}
+        Let \((G,\circ)\) be a group. If \(g,h\in G\), then \((g\circ h)^{-1}=h^{-1}\circ g^{-1}\).
+        \begin{proof}
+            We have \((g\circ h)\circ (h^{-1}\circ g^{-1})=g\circ(h\circ h^{-1})\circ g^{-1}=g\circ g^{-1}=1\) and \((h^{-1}\circ g^{-1})\circ (g\circ h)=h^{-1}\circ(g^{-1}\circ g)\circ h=1\).
+        \end{proof}
+    \end{proposition}
+    \begin{proposition}{\Stop\,\,The Inverse of Many Products}{inverseofmanyproducts}
+        Let \((G,\circ)\) be a group. Then, \((g_1 \circ\cdots\circ g_n)^{-1}=g_n^{-1}\circ\cdots\circ g_1^{-1}\) for all \(g_1,\ldots,g_n\in G\).
+        \begin{proof}
+        We proceed by induction on \(n\). For \(n=1\), the proposition is trivial, with the left hand side being \((g_1)^{-1}=g_1^{-1}\), and the right hand side being \(g_1^{-1}\). Suppose that for \(n=k\geq1\), it is the case that \((g_1\circ\cdots\circ g_k)^{-1}=g_k^{-1}\circ\cdots\circ g_1^{-1}\). Then, 
+            \begin{align*}
+                (g_1\circ\cdots\circ g_k\circ g_{k+1})^{-1}&=g_{k+1}^{-1}(g_1\circ\cdots\circ g_k)^{-1} \\
+                &=g_{k+1}^{-1}\circ g_{k}^{-1}\circ\cdots\circ g_1^{-1} \\
+                &=g_{k+1}^{-1}\circ\cdots\circ g_1^{-1},
+            \end{align*}
+            as desired. Note that we use Proposition \ref{prop:inverseofproduct} that \((g_ig_j)^{-1}=g_j^{-1}g_i^{-1}\) for all \(i,j\in\{1,\ldots,n\}\).
+        \end{proof}
+    \end{proposition}
+    \vphantom
+    \\
+    \\
+    Intuitively, we can think of groups as a mathematical abstraction of a notion of symmetry.
+    \begin{question*}
+        What is a symmetry?
+    \end{question*}
+    \begin{answer*}
+        A symmetry on a set \(A\) is a bijective function \(\sigma:A\to A\).
+    \end{answer*}
+    \begin{remark*}
+        Usually, \(\sigma\) will respect additonal structure on \(A\).
+    \end{remark*}
+    \vphantom
+    \\
+    \\
+    A group is a ``complete'' set of symmetries on a set \(A\) that respect some set of structures on \(A\).
+    \begin{example}
+        Take \(A=\{1,2,3,4\}\). View each element as the corner of a square. The map \(\{1,2,3,4\}\mapsto\{2,1,3,4\}\) does not preserve structure, whereas \(\{1,2,3,4\}\mapsto\{2,3,4,1\}\) does.
+    \end{example}
+    \pagebreak
+    \vphantom
+    \\
+    \\
+    The axioms in Definition \ref{def:groups} encode this notion of symmetry as follows:
+    \begin{enumerate}
+        \item[(G0)] the composition of \(2\) symmetries is a symmetry,
+        \item[(G1)] doing nothing is a symmetry,
+        \item[(G2)] undoing a symmetry is a symmetry, and
+        \item[(G3)] function composition is associative. 
+    \end{enumerate}
+    \vphantom
+    \\
+    \\
+    We now consider the symmetric group.
+    \begin{definition}{\Stop\,\,The Symmetric Group}{symmetricgroup}
+
+        The symmetric group \(S_A\) on the set \(A\) is the group 
+        \begin{equation*}
+            S_A=\{w:A\to A:w\text{ is a bijection}\}
+        \end{equation*}
+        under function composition; \(S_A\) is the set of all symmetries of \(A\) with no additional structure. By convention, \(S_n=S_{\{1,\ldots,n\}}\).
+        
+    \end{definition}
+    \vphantom
+    \\
+    \\
+    By default, for \(w\in S_n\), we write
+    \begin{equation*}
+        w=\begin{bmatrix}
+            1 & \cdots & n \\
+            w(1) & \cdots & w(n)
+        \end{bmatrix}.
+    \end{equation*}
+    Alternative notations exist. Braid notion refers to the canonical method of representing a function as a bipartite graph with nodes and edges. Cycle notation, as discussed in Definition \ref{def:cyclenotation}, is also prevalent.
+    \begin{definition}{\Stop\,\,Cycles}{cyclenotation}
+        An element \(w\in S_n\) is a cycle if 
+        \begin{equation*}
+            w(b_1)=b_2, w(b_2)=b_3,\ldots, w(b_{k-1})=b_k, w(b_k)=b_1
+        \end{equation*}
+        for some set \(B=\{b_1,\ldots,b_k\}\subseteq\{1,\ldots,n\}\) and \(w(a)=(a)\) for all \(a\nin B\).
+        \\
+        \\
+        The length of the cycle is \(k\), and we refer to it as a \(k\)-cycle. We say that the cycles \((a_1\ \cdots\ a_\ell)\) and \((b_1\ \cdots\ b_k)\) are disjoint if \(\{a_1,\ldots,a_\ell\}\cap\{b_1,\ldots,b_k\}=\emptyset\).
+        \\
+        \\
+        The cycle decomposition of an element \(w\in S_n\) is the factorization \(w=c_1\circ \cdots \circ c_\ell\) where \(\{c_1,\ldots,c_\ell\}\) is a set of pairwise disjoint cycles of length greater than \(1\).
+    \end{definition}
+    \begin{remark*}
+        Disjoint cycles commute.
+    \end{remark*}
+    \pagebreak
+    \begin{theorem}{\Stop\,\,The Order of \(\sigma\in S_n\)}{orderpermutationlcm}
+        The order of an element in \(S_n\) equals the least common multiple of the lengths of the cycles in its cycle decomposition.
+        \begin{proof}
+            Let \(\sigma\in S_n\) with \(|\sigma|=k\). Suppose \(\sigma\) has cycle decomposition \(\sigma=\tau_1\cdots\tau_\ell\). Note that \(\tau_1,\ldots,\tau_\ell\) are disjoint by the definition of a cycle decomposition, so they commute. Then, \(1=\sigma^k=(\tau_1\cdots\tau_\ell)^k=\tau_1^k\cdots\tau_\ell^k\). It is also the case that \(\tau_1^k=\cdots=\tau_\ell^k=1\) (if some \(\tau_i^k\neq1\), then it would be the case that \(\sigma^k\neq 1\) since \(\tau_1^k,\ldots,\tau_\ell^k\) are disjoint). Since if \(\tau_i^k=1\), \(|\tau_i||k\), we have that \(k\) is a common multiple of the orders of each \(\tau_1,\ldots,\tau_\ell\). Since the order of a cycle is its length, \(k\) is indeed a common multiple of the lengths of the cycles \(\tau_1,\ldots,\tau_\ell\). Finally, since \(|\sigma|=k\), \(k\) is the least number \(\eta\) such that \(\sigma^\eta=1\). So, \(k\) is the \emph{least} common multiple of the cycle lengths, as desired.
+        \end{proof}
+    \end{theorem}
+
+\pagebreak
+
+\section{Lecture 3: Aug. 30, 2024}
+
+    \subsection{Subgroups and the Dihedral Group}
+
+        Recall that \(S_A\) is the group of all possible symmetries of \(A\) with no additional structure. If we add structure to \(A\), we should obtain a distinguished subset. For clarity, we provide another brief example.
+        \begin{example}
+            Take \(A=\{1,2,3,4\}\), and impose that all maps must preserve the position of \(1\). This gives us the group \(S_{\{2,3,4\}}\).
+        \end{example}
+        \vphantom
+        \\
+        \\
+        We formalize the notion of a subgroup as follows.
+        \begin{definition}{\Stop\,\,Subgroups}{subgroup}
+            A subset \(H\subseteq G\) forms a subgroup of group \((G,\circ)\) if \(1\in H\), \(h\in H\) implies \(h^{-1}\in H\), and \(h,k\in H\) implies \(h\circ k\in H\). If \((H,\circ)\) is a subgroup of \((G,\circ)\), we write \(H\leq G\).
+        \end{definition}
+        \begin{theorem}{\Stop\,\,Subgroup Criterion}{subgroupcriterion}
+            A nonempty subset \(H\subseteq G\) forms a subgroup of \((G,\circ)\) if and only if \(h\circ k^{-1}\in H\) for all \(h,k\in H\).
+            \begin{proof}
+                The proof is in two parts.
+                \begin{enumerate}
+                    \item[(\(\Leftarrow\))] If \(H\leq G\), then it is clear, from Definition \ref{def:subgroup} that \(h\circ k^{-1}\in H\) for all \(h,k\in H\).
+                    \item[(\(\Rightarrow\))] If \(h\circ k^{-1}\in H\) for all \(h,k\in H\neq\emptyset\), then \(h\circ h^{-1}=1\in H\) implying that \(h^{-1}=1\circ h^{-1}\in H\). Then since, we know that \(k^{-1}\in H\). \(h\circ k=h\circ (k^{-1})^{-1}\in H\).
+                \end{enumerate}
+                We are done.
+            \end{proof}
+        \end{theorem}
+        \begin{remark*}
+            The above is probably the ``wrong'' definition; from a category-theoretic perspective, the condition should be that \(H=\varphi(K)\), where \(K\) is a group and \(\varphi:K\to G\) is a group homomorphism.
+        \end{remark*}
+        \begin{definition}{\Stop\,\,Generated Subgroups}{generatedsubgroup}
+            The subgroup \(\langle A\rangle\) generated by a subset \(A\subseteq G\) is the subgroup of \((G,\circ)\) containing \(A\) such that if \(A\subseteq K\leq G\) is a subgroup, then \(\langle A\rangle\subseteq K\).
+        \end{definition}
+        \begin{example}
+            If \(g\in G\), then \(\langle \{g\}\rangle=\{1,g,g^{-1},g^2,g^{-2},\ldots\}\). We often use \(\langle g\rangle\) as notational convenience instead of \(\langle\{g\}\rangle\).
+        \end{example}
+        \begin{definition}{\Stop\,\,Order of a Group Element}{ordergroupelement}
+            The order \(|g|\) of an element \(g\in G\) is the cardinality of the set \(\langle g\rangle\); \(|\langle g\rangle|\).
+        \end{definition}
+        \begin{definition}{\Stop\,\,Cyclic Groups}{cyclicgroup}
+            A group \((G,\circ)\) is cyclic if there exists \(g\in G\) with \(G=\langle g\rangle\).
+        \end{definition}
+        \begin{example}
+            We have that \(\mathbb{Z}/n\mathbb{Z}=\{\bar{0},\ldots,\bar{n-1}\}\) is a group under addition modulo \(n\). Then, \(\mathbb{Z}/n\mathbb{Z}=\langle 1\rangle\).
+        \end{example}
+        \begin{example}
+            Let \(x=e^{\frac{2\pi i}{n}}\in\mathbb{C}\). Then, \(\mathbb{C}_n=\{x^0,\ldots,x^{n-1}\}\) is a group under multiplication in \(\mathbb{C}\) and \(\mathbb{C}_n=\langle x\rangle\). We can think of \(\mathbb{C}_n\) as the set of rotations of a regular \(n\)-gon.
+        \end{example}
+        \begin{question*}
+            Can we add the other symmetries of a regular \(n\)-gon to form a group?
+        \end{question*}
+        \vphantom
+        \\
+        \\
+        It turns out, that yes we can. This leads us to the notion of a dihedral group.
+        \begin{definition}{\Stop\,\,Order of a Group}{ordergroup}
+            The order \(|G|\) of a group \((G,\circ)\) is the cardinality of the set \(G\).
+        \end{definition}
+        \begin{definition}{\Stop\,\,Dihedral Groups}{dihedralgroup}
+            Let \(D_{2n}=\{w\in S_n:w(j)\equiv k\pmod n\implies w(j+1)\equiv k\pm 1\pmod n\}\); \((D_{2n},\circ)\) forms the dihedral group of order \(2n\), and \(D_{2n}\leq S_n\).
+        \end{definition}
+        \begin{remark*}
+            The above definition captures the permutations that preserve the ``neighborliness'' of the vertices of the regular \(n\)-gon. Indeed, the full set of symmetries of the regular \(n\)-gon is captured by \((D_{2n},\circ)\).
+        \end{remark*}
+        \begin{proposition}{\Stop\,\,Order of the Dihedral Group}{orderofdihedralgroup}
+            It is the case that \(|D_{2n}|=2n\).
+            \begin{proof}
+                Let \(w\in D_{2n}\). Suppose \(w(1)=k\).
+                \begin{itemize}
+                    \item Case 1: If \(w(2)=k+1\), then, \(w(3)\neq k\) so \(w(3)=k+2,w(4)=k+3,\ldots, w(n)=k-1\). 
+                    \item Case 2: If \(w(2)=k-1\), then, \(w(3)\neq k\) so \(w(3)=k-2,w(4)=k-3,\ldots,w(n)=k+1\).
+                \end{itemize}
+                Thus, \(w\in D_{2n}\) is completely determined by \((w(1),w(2))\). There are \(n\) choices for the first coordinate, and \(2\) choices for the second coordinate. So, \(|D_{2n}|=2n\), as desired.
+            \end{proof}
+        \end{proposition}
+        \begin{remark*}
+            In Proposition \ref{prop:orderofdihedralgroup}, \(+\) is addition modulo \(n\).
+        \end{remark*}
+        \vphantom
+        \\
+        \\
+        Let \(r,s\in D_{2n}\) be given by
+        \begin{equation*}
+            r(j) \equiv j+1\pmod n, \quad s(j)\equiv-j\pmod n.
+        \end{equation*}
+        We have that if \((w(1),w(2))=(k,k+1)\), then \(w=r^{k-1}\). If \((w(1),w(2))=(k,k-1)\), then \(w=r^{k+1}s\). So, \(D_{2n}=\langle r,s\rangle\). In fact, \(rs=sr^{-1}\). So, our presentation of \(D_{2n}\) will be
+        \begin{equation*}
+            D_{2n}=\langle r,s:r^n=s^2=(rs)^2=1\rangle.
+        \end{equation*}
+
+\pagebreak
+
+\section{Lecture 4: Sep. 4, 2024}
+
+    \subsection{Homomorphisms \& Isomorphisms}
+
+        For motivation, we've seen groups that, intuitively at least, should behave the same way. For example, \(\mathbb{C}_n\) and \(\mathbb{Z}/n\mathbb{Z}\) are, at least at first glance, very similar. It also seems that \(S_A\) and \(S_{|A|}\) should have some correspondence.  Furthermore, it makes sense that if \(A\subseteq B\), \(S_A\) should be related to \(S_B\) in some way. In this section, we make this notion precise.
+
+        \begin{definition}{\Stop\,\,Group Homomorphisms}{grouphomomorphisms}
+
+            A group homomorphism \(\varphi:G\to H\) from a group \((G,\circ)\) to a group \((H,\star)\) is a function such that for all \(g,h\in G\), \(\varphi(x\circ y)=\varphi(x)\star\varphi(y)\).
+            \\
+            \\
+            The image of \(\varphi\) is the subgroup \(\varphi(G)=\{\varphi(g):g\in G\}\leq H\). The kernel of \(\varphi\) is the subgroup \(\ker\varphi=\{g\in G: \varphi(g)=1\}\leq G\).
+            
+        \end{definition}
+        \vphantom
+        \\
+        \\
+        We state some properties of group homomorphisms below.
+        \begin{proposition}{\Stop\,\,Properties of Group Homomorphisms}{propertiesgrouphomomorphisms}
+            If \(\varphi:G\to H\) is a group homomorphism, then
+            \begin{enumerate}
+                \item \(\varphi(1)=1\),
+                \item \(\varphi(g)^{-1}=\varphi(g^{-1})\), and
+                \item \(\varphi(G)\subseteq H\) and \(\ker\varphi\subseteq G\) are subgroups.
+            \end{enumerate}
+            \begin{proof}
+                We proceed as follows:
+                \begin{enumerate}
+                    \item We have that \(\varphi(1)\varphi(1)=\varphi(1\cdot1)=\varphi(1)\). So, \(\varphi(1)=\varphi(1)^{-1}\varphi(1)\varphi(1)=1\).
+                    \item Then, we have \(\varphi(g^{-1})\varphi(g)=\varphi(g^{-1}\circ g)=\varphi(1)=1\).
+                    \item Suppose \(\varphi(g),\varphi(h)\in\varphi(G)\). Then, \(\varphi(g)\varphi(h)^{-1}=\varphi(g\circ h^{-1})\in\varphi(G)\). Similarly, if \(g,h\in\ker\varphi\). Then, \(\varphi(g\circ h^{-1})=\varphi(g)\varphi(h^{-1})=\varphi(g)\varphi(h)^{-1}=1\).
+                \end{enumerate}
+                We are done.
+            \end{proof}
+        \end{proposition}
+        \begin{definition}{\Stop\,\,Group Isomorphism}{grouphomomorphisms}
+
+            A group isomorphism \(\varphi:G\to H\) from a group \((G,\circ)\) to a group \((H,\star)\) is a bijective homomorphism. If an isomorphism \(\varphi:G\to H\) exists, we write \(G\cong H\) and say that \(G\) and \(H\) are isomorphic.
+            
+        \end{definition}
+        \begin{theorem}{\Stop\,\,Isomorphisms of Cyclic Groups}{isomorphismcyclic}
+            Let \((G,\circ)\) be cyclic. Then,
+            \begin{equation*}
+                G\cong\begin{cases}
+                    \mathbb{Z}/n\mathbb{Z} & |G|=n \\
+                    \mathbb{Z} & |G|=\infty
+                \end{cases}.
+            \end{equation*}
+            \begin{proof}
+                We start with the case that \(|G|=n\). Let \(G=\langle g\rangle\). Define \(\varphi:G\to\mathbb{Z}/n\mathbb{Z}\) where \(g^j\mapsto\bar{j}\). We first check that \(\varphi\) is well-defined as injective. We have that \(g^i=g^j\) if and only if \(g^{i-j}=1\) if and only if \(j-i\equiv0\pmod n\) if and only if \(j\equiv i \pmod n\) if and only if \(\bar{i}=\bar{j}\). Then, \(\varphi(g^ig^j)=\varphi(g^{i+j})=\bar{i+j}=\bar{i}+\bar{j}=\varphi(g^i)+\varphi(g^j)\), so \(\varphi\) is a homomorphism. If \(\bar{j}\in\mathbb{Z}/n\mathbb{Z}\), then \(\varphi(g^j)=\bar{j}\), so \(\varphi\) is surjective. Therefore, \(\varphi\) is an isomorphism and \(G\) and \(\mathbb{Z}/n\mathbb{Z}\) are isomorphic. In the case where \(|G|=\infty\), the argument is very similar, taking \(\varphi:G\to\mathbb{Z}\) with \(g^j\mapsto j\).
+            \end{proof}
+        \end{theorem}
+        \begin{theorem}{\Stop\,\,Isomorphisms of Symmetric Groups}{isomorphismsymmetric}
+            Let \(A=\{a_1,\ldots,a_n\}\). Then, \(\varphi:S_n\to S_A\) with \(w\mapsto\varphi(w):A\to A\), \(a_j\mapsto a_{w(j)}\) is an isomorphism.
+        \end{theorem}
+        \begin{remark*}
+            In Theorem \ref{thm:isomorphismsymmetric}, \(\varphi\) depends entirely on the choice of the total order n the elements in \(A\). Consider \(A=\{\spadesuit,\clubsuit,\heartsuit\}=\{\heartsuit,\spadesuit,\clubsuit\}\). If we take \((1\ 3)\in S_3\), \(\varphi((1\ 3))=(\spadesuit\ \heartsuit)\) under the first ordering, but \(\varphi((1\ 3))=(\heartsuit\ \clubsuit)\) under the second. Regardless, though, \(\varphi\) is an isomorphism.
+        \end{remark*}
+
+\pagebreak
+
+\section{Lecture 5: Sep. 6, 2024}
+
+    \subsection{Group Actions}
+
+        In this section, we explore how groups and sets can interact reasonably. Consider the following definitions.
+        \begin{definition}{\Stop\,\,Group Actions}{groupactions}
+            A group \((G,\circ)\) acts on a set \(A\) if there exists a homomorphism \(\varphi:G\to S_A\).
+            \\
+            \\
+            A left action of \(G\) on \(A\) is a function \(G\times A\to A\), \((g,a)\mapsto g(a)\) such that
+            \begin{enumerate}
+                \item[(A1)] for all \(a\in A\), \(1(a)=a\), and
+                \item[(A2)] for all \(a\in A\) and \(g,h\in G\), \(g(h(a))=(g\circ h)(a)\).
+            \end{enumerate}
+        \end{definition}
+        \begin{proposition}{\Stop\,\,Left Action If and Only If Group Acts on the Set}{leftactioniffgroupaction}
+            A function \(G\times A\to A\) is a left action if and only if
+            \begin{equation*}
+                \varphi:G\to S_A, \quad g\mapsto \varphi(g): A\to A, a\mapsto g(a).
+            \end{equation*}
+            is a homomorphism.
+        \end{proposition}
+        \begin{definition}{\Stop\,\,Triviality and Faithfulness}{trivialityfaithfulnessgroupaction}
+            A group action \(G\times A\to A\) is
+            \begin{itemize}
+                \item trivial if for all \(a\in A\) and \(g\in G\), \(g(a)=a\), and
+                \item faithful if \(g(a)=a\) for all \(a\in A\) implies \(g=1\).
+            \end{itemize}
+        \end{definition}
+        \begin{lemma}{\Stop\,\,Injective Group Homomorphism If and Only if Kernel is Trivial}{injhomoifftrivialker}
+            If \(\varphi:G\to H\) is a group homomorphism, then \(\varphi\) is injective if and only if \(\ker\varphi=\{1\}\).
+            \begin{proof}
+                The proof is in two parts.
+                \begin{enumerate}
+                    \item[\((\Rightarrow)\)] Suppose that \(\varphi\) were injective but \(\ker\varphi\neq\{1\}\). So, there would exist distinct \(g,h\in G\) with \(\varphi(g)=\varphi(h)=1\) but \(g\neq h\). This contradicts injectivity.
+                    \item[\((\Leftarrow)\)] Suppose \(\ker\varphi=\{1\}\). If \(\varphi(g)=\varphi(h)\), then \(1=\varphi(g)\varphi(h^{-1})=\varphi(g\circ h^{-1})\). So, \(g\circ h^{-1}=1\) and \(g=h\), so \(\varphi\) is injective.
+                \end{enumerate}
+                We are done.
+            \end{proof}
+        \end{lemma}
+        \begin{theorem}{\Stop\,\,Faithful Action If and Only If \(G\) Isomorphic to Subgroup of \(S_A\)}{faithfulactioniffgisotosubofSA}
+            A group action \(G\times A\to A\), with corresponding homomorphism \(\varphi:G\to S_A\), is faithful if and only if \(G\) is isomorphic to a subgroup of \(S_A\).
+            \begin{proof}
+                Let \(G\) act on \(A\) with corresponding homomorphism \(\varphi:G\to S_A\). The action is faithful if and only if \(g(a)=a\) for all \(a\in A\) implies that \(g=1\). This means that \(\ker\varphi\) must be trivial since otherwise \(1\neq x\in\ker\varphi\) has \(\varphi(x)=1\neq x\). Then, \(\varphi\) is injective if and only if \(\ker\varphi=\{1\}\), and it is surjective onto its range \(H\leq S_A\). So, \(\varphi:G\to H\) is the desired isomorphism.
+            \end{proof}
+        \end{theorem}
+        \begin{corollary}{\Stop\,\,Cayley's Theorem}{cayleythm}
+            If \(|G|=n\), then \(G\) is isomorphic to a subgroup of \(S_n\).
+            \begin{proof}
+                Note that \((G,\circ)\) acts on \(G\) by left multiplication:
+                \begin{equation*}
+                    g(h)=g\circ h,\quad g\in G, h\in G.
+                \end{equation*}
+                This action is faithful, so \(G\) is isomorphic to a subgroup of \(S_G\cong S_{|G|}=S_n\) by Theorem \ref{thm:faithfulactioniffgisotosubofSA}.
+            \end{proof}
+        \end{corollary}
+        \vphantom
+        \\
+        \\
+        We now discuss group actions on sets with more structure. First, we define some algebraic structures.
+        \begin{definition}{\Stop\,\,Abelian Groups}{abelian}
+            A group \((G,\circ)\) is abelian \(g\circ h=h\circ g\) for all \(g,h\in G\).
+        \end{definition}
+        \begin{proposition}{\Stop\,\,Isomorphic Groups are Either Both Abelian or Both Not Abelian}{abelianpreserveiso}
+            Let \(\varphi:G\to H\) be a group isomorphism. Then, \(G\) is abelian if and only if \(H\) is abelian.
+            \begin{proof}
+                The proof is in two parts. Let \(\varphi:G\to H\) be a isomorphism.
+                \begin{itemize}
+                    \item[\((\Rightarrow)\)] Suppose \(G\) is abelian. Take arbitrary \(h_1,h_2\in H\) and write \(h_1=\varphi(g_1)\) and \(h_2=\varphi(g_2)\) for \(g_1,g_2\in G\). Note that this is possible since \(\varphi\) is surjective. Then,
+                    \begin{equation*}
+                        h_1h_2=\varphi(g_1)\varphi(g_2)=\varphi(g_1g_2)=\varphi(g_2g_1)=\varphi(g_2)\varphi(g_1)=h_2h_1.
+                    \end{equation*}
+                    So, \(H\) is abelian.
+                    \item[\((\Leftarrow)\)] Suppose \(H\) is abelian. Take arbitrary \(g_1,g_2\in G\) with \(g_1=\varphi^{-1}(h_1)\) and \(g_2=\varphi^{-1}(h_2)\) for \(h_1,h_2\in G\). Note that \(g_1\) and \(g_2\) are well-defined since \(\varphi\) is injective. Also, note that \(\varphi^{-1}:H\to G\) is an isomorphism since \(\varphi:G\to H\) is. So, we can write
+                    \begin{equation*}
+                        g_1g_2=\varphi^{-1}(h_1)\varphi^{-1}(h_2)=\varphi^{-1}(h_1h_2)==\varphi^{-1}(h_2h_1)=\varphi^{-1}(h_2)\varphi^{-1}(h_1)=g_2g_1.
+                    \end{equation*}
+                    So, \(G\) is abelian. 
+                \end{itemize}
+                We are done. 
+            \end{proof}
+        \end{proposition}
+        \begin{remark*}
+            If \((G,\circ)\) is abelian, we often, but not always, write \(+\) for the group operation \(\circ\). Here, \(1=0\).
+        \end{remark*}
+        \begin{definition}{\Stop\,\,Fields}{fields}
+            A field \((\mathbb{F},+,\cdot)\) is an abelian group under \(+:\mathbb{F}\times\mathbb{F}\to\mathbb{F}\) with a function \(\cdot:\mathbb{F}\times\mathbb{F}\to\mathbb{F}\), \((r,s)\mapsto rs\) such that
+            \begin{enumerate}
+                \item[(F1)] \(\mathbb{F}^\times=\mathbb{F}\backslash\{0\}\) is an abelian group under \(\cdot\), and
+                \item[(F2)] for \(r,s,t\in\mathbb{F}\), \((r+s)t=rt+st\). 
+            \end{enumerate}
+        \end{definition}
+        \begin{definition}{\Stop\,\,\(\mathbb{F}\)-Modules}{Fmodules}
+            An \(\mathbb{F}\)-module \((V,+,\cdot)\) is an abelian group under \(+:V\times V\to V\) with a function \(\circ:\mathbb{F}\times V\to V\), \((r,v)\mapsto rv\) such that
+            \begin{enumerate}
+                \item[(M1)] \(\mathbb{F}^\times\times V\to V\) is a left action on the set \(V\), and
+                \item[(M2)] for all \(a,b\in\mathbb{F}\) and \(u,v\in V\), \((a+b)(u+v)=au+bu+av+bv\). 
+            \end{enumerate}
+        \end{definition}
+        \begin{remark*}
+            In linear algebra, we call \(\mathbb{F}\)-modules vector spaces.
+        \end{remark*}
+        \begin{definition}{\Stop\,\,Group Actions on \(\mathbb{F}\)-Modules}{groupactionsFmodules}
+            
+            A group action of a group \((G,\circ)\) on an \(\mathbb{F}\)-module \(V\) is a left action \(G\times V\to V\) on the set \(V\) such that for \(g\in G\), \(a,b\in\mathbb{F}\), \(u,v\in V\), we have that
+            \begin{equation*}
+                g(au+bv)=ag(u)+bg(v).
+            \end{equation*}
+
+        \end{definition}
+        \begin{example}
+            We have that \(S_n\) acts on \(V=\mathbb{C}^n\) by
+            \begin{equation*}
+                w\begin{bmatrix}
+                    v_1 \\ \vdots \\ v_n
+                \end{bmatrix}=\begin{bmatrix}
+                    v_{w(1)} \\ \vdots \\ v_{w(1)}
+                \end{bmatrix}
+            \end{equation*}
+        \end{example}
+        \begin{example}
+            We have that \(\GL_n(\mathbb{C})=\{A\in\mathbb{C}^{n\times n}: \det A\neq 0\}\) acts on \(\mathbb{C}^n\) by usual matrix-vector multiplication.
+        \end{example}
+        \begin{remark*}
+            For each action of \(G\) on an \(\mathbb{F}\)-module \(V\), we get a homomorphism \(\varphi:G\to\GL(V)\), where \(\GL(V)\) is the group of invertible linear operators on \(V\). Just as \(S_A\cong S_{|A|}\), we have that for each choice of ordered basis \(B\) on \(V\), we get \(\GL(V)\cong \GL_{|B|}(\mathbb{F})\). We call \(\varphi\) a representation.
+        \end{remark*}
+        \begin{remark*}
+            Group actions on \(\mathbb{F}\)-modules give us matrix groups.
+        \end{remark*}
+
+        \pagebreak
+
+\section{Lecture 6: Sep. 9, 2024}
+
+    \subsection{Subgroup Constructions}
+
+        Recall Definition \ref{def:generatedsubgroup}, where for a group \((G,\circ)\) and a set \(A\), we have that \(\langle A\rangle\) forms a subgroup of \(G\). Define
+        \begin{equation*}
+            W(A)=\{b_1,\ldots,b_\ell:\ell\in\mathbb{N},b_1,\ldots,b_\ell\in A\cup A^{-1}\}
+        \end{equation*}
+        where \(A^{-1}=\{a^{-1},a\in A\}\). If \(\ell=0\), \(b_1\cdots b_\ell=1\). 
+        \begin{proposition}{\Stop\,\,Equivalent Characterizations of the Generated Subgroup}{generatedsubgroupcharacterization}
+            If \(\emptyset\neq A\subseteq G\) for group \((G,\circ)\), then
+            \begin{equation*}
+                W(A)=\langle A\rangle=\bigcap_{H\leq G,A\subseteq H}H.
+            \end{equation*}
+            \begin{proof}
+                Suppose \(K\leq G\) is a subgroup with \(A\subseteq K\). Then, by closure in a subgroup and \(A^{-1}\subseteq K\), \(W(A)\subseteq K\). Also, \(\bigcap_{H\leq G,A\subseteq G}H\subseteq K\) since \(K\leq G\). So, 
+                \begin{equation*}
+                    W(A)=\langle A\rangle=\bigcap_{H\leq G,A\subseteq H}H,
+                \end{equation*}
+                as desired.
+            \end{proof}
+        \end{proposition}
+        \begin{remark*}
+            We use the uniqueness of \(\langle A \rangle\) in the proof of Proposition \ref{prop:generatedsubgroupcharacterization}.
+        \end{remark*}
+        \begin{example}
+            We have \(D_{2n}\cong \langle (1\ \cdots\ n), (1,n-1)(2,n-2),\ldots \rangle\leq S_n\).
+        \end{example}
+        \begin{example}
+            We have \(\GL_n(\mathbb{F})\). Define \(x_{i,j}(t)\in\mathbb{F}^{n\times n}\) to be the matrix with \(1\) on the main diagonal, \(t\) in the \((i,j)\) position, and \(0\) elsewhere. Then,
+            \begin{equation*}
+                \langle x_{i,j}(t):1\leq i<j\leq n, t\in\mathbb{F}\rangle=\langle x_{i,j+1}(t):1\leq i< n, t\in\mathbb{F}\rangle
+            \end{equation*}
+            gives the upper triangular matrices. Then,
+            \begin{equation*}
+                \GL_n(\mathbb{F})=\langle x_{i,j}(t), w_k:1\leq i, j\leq n, t\in\mathbb{F}, k\leq k< n \rangle.
+            \end{equation*}
+            In this example, \(x_{i,j}(\cdot)\) corresponds to the row operations of scaling and adding rows, while \(w_k\) encodes the operation of switching rows.
+        \end{example}
+        \vphantom
+        \\
+        \\
+        Consider the following definitions.
+        \begin{definition}{\Stop\,\,Maximal Subgroup}{maximalsubgroup}
+            A subgroup \(H\leq G\) is maximal if \(H\neq G\) and \(H\subseteq K\subseteq G\) a subgroup implies \(K=H\) or \(K=G\).
+        \end{definition}
+        \begin{definition}{\Stop\,\,Subgroup Lattice}{subgrouplattice}
+            The subgroup lattice of a group \((G,\circ)\) is the partial order \(\subseteq\) on the set
+            \begin{equation*}
+                \mathcal{S}=\{H\subseteq G:H\leq G\}.
+            \end{equation*}
+        \end{definition}
+        \begin{definition}{\Stop\,\,Hasse Diagrams}{hassediagrams}
+            The Hasse diagram of the subgroup lattice is the directed graph with vertices \(\mathcal{S}\) and an edge from \(H\) to \(K\) if \(H\) is a maximal subgroup of \(K\).
+        \end{definition}
+        \begin{example}
+            For \(D_8\), we have the following subgroup lattice, represented as a Hasse diagram.
+            \DOTHISLATER
+        \end{example}
+        \begin{definition}{\Stop\,\,Stabilizers}{stablizers}
+            If a group \((G,\circ)\) acts on a set \(B\) and \(A\subseteq B\), then the stabilizer \(\stab_G(A)\) is the subgroup
+            \begin{equation*}
+                \stab_G(A)=\{g\in G:g(a)=a,a\in A\}\leq G.
+            \end{equation*}
+            The weak stabilizer \(\wstab_G(A)\) is the subgroup
+            \begin{equation*}
+                \wstab_G(A)=\{g\in G:g(a),g^{-1}(a)\in A,a\in A\}\leq G.
+            \end{equation*}
+        \end{definition}
+        \begin{remark*}
+            If \(\varphi:G\to S_B\) is the corresponding homomorphism, then \(\ker\varphi=\stab_G(B)\). Also, \(\stab_G(A)\subseteq\wstab_G(A)\).
+        \end{remark*}
+        \begin{remark*}
+            We can think of \(\wstab_G(A)\) as capturing being able to permute the elements of \(A\), while \(\stab_G(A)\) fixes them.
+        \end{remark*}
+        \begin{example}
+            We have that \(\stab_{S_n}(\{1,n\})=\{w\in S_n: w(1)=1, w(n)=n\}\cong S_{2,\ldots,n-1}\cong S_{n-2}\). Then, \(\wstab_{S_n}(\{1,n\})=\{ww':w\in S_{\{1,n\}}, w'\in S_{\{2,\ldots,n-1\}}\cong S_{n-2}\times S_2\}\).
+        \end{example}
+        \begin{example}
+            We have that \(\stab_{D_{2n}}(\{1,n\})=\{1\}\) and \(\wstab_{D_{2n}}(\{1,n\})=\{1, rs\}\).
+        \end{example}
+        \begin{example}
+            Consider \(\GL_n(\mathbb{F})\) acting on \(\mathbb{F}^n\). Consider \(V=\mathbb{F}\)-\(\Span\{v\}\), with \(v\neq0\). We have
+            \begin{equation*}
+                \stab_{\GL_n(\mathbb{F})}(V)=\{g\in \GL_n(\mathbb{F}):v\text{ is an eigenvector of }g\text{ with eigenvalue }1\}
+            \end{equation*}
+            and
+            \begin{equation*}
+                \wstab_{\GL_n(\mathbb{F})}(V)=\{g\in \GL_n(\mathbb{F}):v\text{ is an eigenvector of }g\}.
+            \end{equation*}
+            Note \(V\neq\mathbb{F}-\Span\{v\}\), but \(V\neq\mathbb{F}\)-\(\Span\{v\}\)
+        \end{example}
+
+\pagebreak
+
+\section{Lecture 7: Sep. 11, 2024}
+
+    \subsection{Conjugacy and Orbits of a Group Action}
+
+        Recall that the group \((G,\circ)\) acts on the set \(G\) by left multiplication, or
+        \begin{equation*}
+            L:G\times G\to G, \quad (g,h)\mapsto gh.
+        \end{equation*}
+        If \(A\subseteq G\), then \(\stab_G(A)=\{1\}\). If \(H\leq G\), then \(\wstab_G(H)=H\).
+        \\
+        \\
+        Another action of \((G,\circ)\) on \(G\) is given by
+        \begin{equation*}
+            G\times G\to G, \quad (g,h)\mapsto ghg^{-1}.
+        \end{equation*}
+        We call this action the conjugation action.
+        \begin{remark*}
+            Note that conjugation is trivial if \(G\) is abelian. In general, conjugation is not faithful, although it could be.
+        \end{remark*}
+        \vphantom
+        \\
+        \\
+        We state some associated definitions below.
+        \begin{definition}{\Stop\,\,Centralizers}{centralizers}
+            The centralizer \(C_G(A)\) of a subset \(A\subseteq G\) is the subgroup
+            \begin{equation*}
+                C_G(A)=\stab_G(A)
+            \end{equation*}
+            where \((G,\circ)\) acts on \(G\) by conjugation.
+        \end{definition}
+        \begin{remark*}
+            We have that \(C_G(g)\) is the subgroup of all elements that commute with \(g\in G\).
+        \end{remark*}
+        \begin{definition}{\Stop\,\,Normalizers}{normalizers}
+            The normalizer \(N_G(A)\) of a subset \(A\subseteq G\) is the subgroup
+            \begin{equation*}
+                N_G(A)=\wstab_G(A)
+            \end{equation*}
+            where \((G,\circ)\) acts on \(G\) by conjugation.
+        \end{definition}
+        \begin{definition}{\Stop\,\,Centers}{centers}
+            The center \(Z(G)\) of a group \(G\) is the subgroup \(Z(G)=C_G(G)\).
+        \end{definition}
+        \pagebreak
+        \begin{proposition}{\Stop\,\,Conditions for Triviality and Faithfulness of Conjugation}{trivialityfaithfulnessconj}
+            We have that the conjugation action is
+            \begin{enumerate}
+                \item trivial if and only if \(Z(G)=G\), and
+                \item faithful if and only if \(Z(G)=\{1\}\).
+            \end{enumerate}
+            \begin{proof}
+                The proof is in two parts.
+                \begin{enumerate}
+                    \item We have \(ghg^{-1}=h\) for all \(g\in G\) if and only if \(g\in Z(G)\). 
+                    \item We have \(ghg^{-1}=h\) for all \(h\in G\) if and only if \(g\in Z(G)\). 
+                \end{enumerate}
+                We are done.
+            \end{proof}
+        \end{proposition}
+        \begin{example}
+            We have
+            \begin{equation*}
+                Z(D_2n)=\begin{cases}
+                    \{1\} & n\bmod 2\neq0 \\
+                    \left\{1,r^\frac{n}{2}\right\} & n\bmod 2=0
+                \end{cases}.
+            \end{equation*}
+        \end{example}
+        \begin{example}
+            We have \(N_G(G)=N_G(\{1\})=G\).
+        \end{example}
+        \begin{definition}{\Stop\,\,Normal Subgroups}{normalsubgroups}
+            A subgroup \(H\leq G\) is normal if
+            \begin{equation*}
+                N_G(H)=G.
+            \end{equation*}
+            We write \(H\trianglelefteq G\).
+        \end{definition}
+        \begin{example}
+            Since \(N_G(Z(G))=G\), we have \(Z(G)\trianglelefteq G\).
+        \end{example}
+        \begin{remark*}
+            The subgroup \(N_G(H)\) is the largest subgroup of \(G\) is which \(H\trianglelefteq N_G(H)\).
+        \end{remark*}
+        \begin{definition}{\Stop\,\,Transitivity of Group Actions}{transitivegroupactions}
+            A group action of \((G,\circ)\) on \(A\) is transitive if
+            \begin{equation*}
+                A=\{g(a):g\in G\}
+            \end{equation*}
+            for each \(a\in A\).
+        \end{definition}
+        \begin{example}
+            We have that
+            \begin{itemize}
+                \item \(S_n\) acts transitively on \(\{1,\ldots,n\}\),
+                \item \(D_{2n}\) acts transitively on \(\{1,\ldots,n\}\),
+                \item \(\GL_n(\mathbb{F})\) acts transitively on \(\mathbb{F}^n\backslash\{0\}\),
+                \item \(S_n\) acts transitively on \(\{\{i,j\}:1\leq i<j\leq n\}\), and 
+                \item \(D_{2n}\) does not act transitively on \(\{\{i,j\}:1\leq i<j\leq n\}\).
+            \end{itemize}
+        \end{example}
+        \begin{definition}{\Stop\,\,Orbits}{orbits}
+            Given \((G,\circ)\) acting on \(A\) and \(a\in A\), the orbit \(G(a)\) of \(a\) is the subset
+            \begin{equation*}
+                G(a)=\{g(a):g\in G\}\subseteq A.
+            \end{equation*}
+        \end{definition}
+        \begin{remark*}
+            The orbits of an action are the equivalence classes of the equivalence relation
+            \begin{equation*}
+                a\sim b\iff b\in G(a).
+            \end{equation*}
+        \end{remark*}
