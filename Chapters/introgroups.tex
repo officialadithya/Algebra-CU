@@ -338,7 +338,7 @@
             A group \((G,\circ)\) acts on a set \(A\) if there exists a homomorphism \(\varphi:G\to S_A\).
             \\
             \\
-            A left action of \(G\) on \(A\) is a function \(G\times A\to A\), \((g,a)\mapsto g(a)\) such that
+            A left action of \((G,\circ)\) on \(A\) is a function \(G\times A\to A\), \((g,a)\mapsto g(a)\) such that
             \begin{enumerate}
                 \item[(A1)] for all \(a\in A\), \(1(a)=a\), and
                 \item[(A2)] for all \(a\in A\) and \(g,h\in G\), \(g(h(a))=(g\circ h)(a)\).
@@ -517,8 +517,21 @@
             The Hasse diagram of the subgroup lattice is the directed graph with vertices \(\mathcal{S}\) and an edge from \(H\) to \(K\) if \(H\) is a maximal subgroup of \(K\).
         \end{definition}
         \begin{example}
-            For \(D_8\), we have the following subgroup lattice, represented as a Hasse diagram.
-            \DOTHISLATER
+            For \(D_8\), we have the following subgroup lattice, represented as a Hasse diagram:
+            \begin{center}
+                \begin{forest}
+                    for tree={
+                        %draw,
+                        %fill,
+                        %minimum width=1pt, % size
+                        %inner sep=1pt,
+                        parent anchor=south,
+                        child anchor=north,
+                        %s sep+=25pt, % distance between children
+                    }
+                    [{\(\langle r,s \rangle\)} [{\(\langle r^2,rs \rangle\)} [{\(\langle r^3s \rangle\)} [{\(\{1\}\)}]] [{\(\langle rs \rangle\)} [{\(\{1\}\)}]] [{\(\langle r^2 \rangle\)} [{\(\{1\}\)}]]] [{\(\langle r \rangle\)} [{\(\langle r^2 \rangle\)} [{\(\{1\}\)}]]] [{\(\langle r^2,s \rangle\)} [{\(\langle r^2 \rangle\)} [{\(\{1\}\)}]] [{\(\langle r^2s \rangle\)} [{\(\{1\}\)}]] [{\(\langle s \rangle\)} [{\(\{1\}\)}]]]]
+                \end{forest}.                         
+            \end{center}
         \end{example}
         \begin{definition}{\Stop\,\,Stabilizers}{stablizers}
             If a group \((G,\circ)\) acts on a set \(B\) and \(A\subseteq B\), then the stabilizer \(\stab_G(A)\) is the subgroup
@@ -618,7 +631,7 @@
         \begin{example}
             We have
             \begin{equation*}
-                Z(D_2n)=\begin{cases}
+                Z(D_{2n})=\begin{cases}
                     \{1\} & n\bmod 2\neq0 \\
                     \left\{1,r^\frac{n}{2}\right\} & n\bmod 2=0
                 \end{cases}.
@@ -657,6 +670,13 @@
                 \item \(D_{2n}\) does not act transitively on \(\{\{i,j\}:1\leq i<j\leq n\}\).
             \end{itemize}
         \end{example}
+
+\pagebreak
+
+\section{Lecture 8: Sep. 13, 2024}
+
+    \subsection{Orbits \& Cosets}
+
         \begin{definition}{\Stop\,\,Orbits}{orbits}
             Given \((G,\circ)\) acting on \(A\) and \(a\in A\), the orbit \(G(a)\) of \(a\) is the subset
             \begin{equation*}
@@ -668,4 +688,68 @@
             \begin{equation*}
                 a\sim b\iff b\in G(a).
             \end{equation*}
+        \end{remark*}
+        \begin{example}
+            Consider a necklace with some set of \(n\) possible beads. How many possible bracelets can we have, up to bracelets being indistinguishable up to reflections and rotations? We can consider \(D_{2n}\) acting on the set of necklaces, and we want to count the number of orbits under this group action.
+        \end{example}
+        \begin{definition}{\Stop\,\,Right Actions}{rightactions}
+            A right action of a group \((G,\circ)\) on a set \(A\) is a function \(A\times G\to A\), \((a,g)\mapsto (ag)\) such that
+            \begin{enumerate}
+                \item[(A1)] for all \(a\in A\), \((a1)=a\), and
+                \item[(A2)] for all \(a\in A\) and \(g,h\in G\), \(((ag)h)=(a(g\circ h))\).
+            \end{enumerate}
+        \end{definition}
+        \begin{definition}{\Stop\,\,\(2\)-Sided Actions}{2sidedactions}
+           A \(2\)-sided action of groups \((G,\circ)\) and \((H,\star)\) on a set \(A\) is a function
+           \begin{equation*}
+            G\times A\times H\to A,\quad (g,a,h)\mapsto gah
+           \end{equation*}
+           such that 
+           \begin{enumerate}
+                \item[(A1)] \(G\times A\times\{1\}\) is a left action,
+                \item[(A2)] \(\{1\}\times A\times H\) is a right action, and
+                \item[(A3)] \((g(a)h)=g(ah)\) for all \(g\in G\), \(a\in A\), and \(h\in H\).
+            \end{enumerate}
+        \end{definition}
+        \begin{remark*}
+            Any \(2\)-sided action may be converted to a left action by \(G\times H\) given by \(G\times H\times A\to A\), \((g,h,a)\mapsto gah^{-1}\).
+        \end{remark*}
+        \pagebreak
+        \vphantom
+        \\
+        \\
+        We now turn to cosets. 
+        \begin{definition}{\Stop\,\,Cosets}{cosets}
+            Let \(H\leq G\) be a subgroup. Then, \(H\) acts of \(G\) by left and right multiplication,
+            \begin{equation*}
+                H\times G\to G,\quad (h,g)\mapsto hg
+            \end{equation*}
+            and 
+            \begin{equation*}
+                G\times H\to G,\quad (g,h)\mapsto gh.
+            \end{equation*}
+            The left cosets \(G/H\) (and respectively, the right cosets \(H\backslash G\)) of \(H\) in \(G\) is the set of orbits of the right (respectively left) action of \(H\) on \(G\). Note \(H\backslash G\) is not a set difference.
+        \end{definition}
+        \begin{remark*}
+            As notation, a left coset (orbit) is of the form \(gH=\{gh:h\in H\}\).
+        \end{remark*}
+        \begin{remark*}
+            If \(H\leq G\), then a set \(R\) of coset representatives is a subset \(R\subseteq G\) such that \(|R\cap gH|=1\) for all \(g\in G\).
+        \end{remark*}
+        \begin{corollary}{\Stop\,\,Lagrange's Theorem}{lagrangethm}
+            If \(H\leq G\) is a subgroup, then \(|H|||G|\).
+            \begin{proof}
+                Copy from HW 2.
+                \DOTHISLATER
+            \end{proof}
+        \end{corollary}
+        \begin{example}
+            We have
+            \begin{itemize}
+                \item \(S_2\times S_{n-2}\cong S_{1,2}\times S_{3,\ldots, n}\hookrightarrow S_n\)
+                \item Consider \(S_n\) in braid notation under multiplication.
+            \end{itemize}
+        \end{example}
+        \begin{remark*}
+            \(A\hookrightarrow B\) means there exists an injection from \(A\) to \(B\).
         \end{remark*}
